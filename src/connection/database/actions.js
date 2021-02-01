@@ -84,7 +84,9 @@ export function signUp(id) {
         const fieldValue = c.getFieldValue(m, x.get('name'));
         switch (storage) {
           case 'root':
-            params[fieldName] = fieldValue;
+            if (fieldValue) {
+              params[fieldName] = fieldValue;
+            }
             break;
           default:
             if (!params.user_metadata) {
