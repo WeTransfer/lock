@@ -36,12 +36,15 @@ export default {
     passwordless: {
       'bad.email': 'The email is invalid',
       'bad.phone_number': 'The phone number is invalid',
-      'lock.fallback': "We're sorry, something went wrong"
+      'lock.fallback': "We're sorry, something went wrong",
+      invalid_captcha: 'Solve the challenge question to verify you are not a robot.',
+      invalid_recaptcha: 'Select the checkbox to verify you are not a robot.'
     },
     signUp: {
       invalid_password: 'Password is invalid.',
       'lock.fallback': "We're sorry, something went wrong when attempting to sign up.",
       password_dictionary_error: 'Password is too common.',
+      password_leaked: 'This combination of credentials was detected in a public data breach on another website. Before your account is created, please use a different password to keep it secure.',
       password_no_user_info_error: 'Password is based on user information.',
       password_strength_error: 'Password is too weak.',
       user_exists: 'The user already exists.',

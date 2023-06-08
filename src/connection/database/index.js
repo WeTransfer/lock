@@ -23,7 +23,7 @@ export function initDatabase(m, options) {
 
 function assertMaybeBoolean(opts, name) {
   const valid = opts[name] === undefined || typeof opts[name] === 'boolean';
-  if (!valid) l.warn(opts, `The \`${name}\` option will be ignored, because it is not a booelan.`);
+  if (!valid) l.warn(opts, `The \`${name}\` option will be ignored, because it is not a boolean.`);
   return valid;
 }
 
@@ -48,7 +48,7 @@ function assertMaybeString(opts, name) {
 }
 
 function assertMaybeArray(opts, name) {
-  const valid = opts[name] === undefined || global.Array.isArray(opts[name]);
+  const valid = opts[name] === undefined || window.Array.isArray(opts[name]);
   if (!valid) l.warn(opts, `The \`${name}\` option will be ignored, because it is not an array.`);
   return valid;
 }
@@ -63,7 +63,8 @@ function processDatabaseOptions(opts) {
     showTerms,
     signUpLink,
     usernameStyle,
-    signUpFieldsStrictValidation
+    signUpFieldsStrictValidation,
+    signUpHideUsernameField
   } = opts;
 
   let { initialScreen, screens } = processScreenOptions(opts);
@@ -94,6 +95,10 @@ function processDatabaseOptions(opts) {
 
   if (!assertMaybeBoolean(opts, 'signUpFieldsStrictValidation')) {
     signUpFieldsStrictValidation = false;
+  }
+
+  if (!assertMaybeBoolean(opts, 'signUpHideUsernameField')) {
+    signUpHideUsernameField = false;
   }
 
   if (!assertMaybeArray(opts, 'additionalSignUpFields')) {
@@ -204,7 +209,7 @@ function processDatabaseOptions(opts) {
       }
 
       if (
-        (options != undefined && !global.Array.isArray(options) && typeof options != 'function') ||
+        (options != undefined && !window.Array.isArray(options) && typeof options != 'function') ||
         (type === 'select' && options === undefined)
       ) {
         l.warn(
@@ -259,7 +264,8 @@ function processDatabaseOptions(opts) {
     screens,
     signUpLink,
     usernameStyle,
-    signUpFieldsStrictValidation
+    signUpFieldsStrictValidation,
+    signUpHideUsernameField
   })
     .filter(x => typeof x !== 'undefined')
     .toJS();
@@ -454,6 +460,10 @@ export function showTerms(m) {
 
 export function signUpFieldsStrictValidation(m) {
   return get(m, 'signUpFieldsStrictValidation', false);
+}
+
+export function signUpHideUsernameField(m) {
+  return get(m, 'signUpHideUsernameField', false);
 }
 
 export function mustAcceptTerms(m) {

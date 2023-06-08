@@ -39,12 +39,15 @@ export default {
     passwordless: {
       'bad.email': 'Email không hợp lệ.',
       'bad.phone_number': 'Số điện thoại không hợp lệ.',
-      'lock.fallback': 'Đã có lỗi xãy ra, chúng tôi rất lấy làm tiếc.'
+      'lock.fallback': 'Đã có lỗi xãy ra, chúng tôi rất lấy làm tiếc.',
+      invalid_captcha: 'Giải quyết câu hỏi thử thách để xác minh bạn không phải là robot.',
+      invalid_recaptcha: 'Chọn hộp kiểm để xác minh bạn không phải là robot.'
     },
     signUp: {
       invalid_password: 'Mật khẩu không hợp lệ.',
       'lock.fallback': 'Đã có lỗi xảy ra trong lúc đăng ký, chúng tôi rất lấy làm tiếc.',
       password_dictionary_error: 'Mật khẩu quá dễ đoán.',
+      password_leaked: 'Tổ hợp thông tin xác thực này đã được phát hiện trong một vụ vi phạm dữ liệu công khai trên một trang web khác. Trước khi tài khoản của bạn được tạo, vui lòng sử dụng một mật khẩu khác để bảo mật.',
       password_no_user_info_error: 'Mật khẩu giống thông tin cá nhân.',
       password_strength_error: 'Mật khẩu quá yếu.',
       user_exists: 'Tài khoản đã có người sử dụng.',
@@ -105,7 +108,7 @@ export default {
   passwordlessEmailInstructions: 'Nhập email của bạn để đăng nhập<br/>hoặc đăng ký',
   passwordlessSMSAlternativeInstructions:
     'Bằng không, nhập số điện thoại của bạn để đăng nhập<br/>hoặc đăng ký',
-  passwordlessSMSCodeInstructions: '1 SMS có mã số đã được gửi <br/>tới %s.',
+  passwordlessSMSCodeInstructions: '1 SMS có mã số đã được gửi tới %s.',
   passwordlessSMSInstructions: 'Nhập số điện thoại của bạn để đăng nhập<br/>hoặc đăng ký',
   phoneNumberInputPlaceholder: 'Số điện thoại',
   resendCodeAction: 'Không nhận được mã số?',

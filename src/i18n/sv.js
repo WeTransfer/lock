@@ -39,12 +39,15 @@ export default {
     passwordless: {
       'bad.email': 'Din e-postadress är ogiltig.',
       'bad.phone_number': 'Ditt telefonnummer är ogiltigt.',
-      'lock.fallback': 'Något gick fel.'
+      'lock.fallback': 'Något gick fel.',
+      invalid_captcha: 'Lös utmaningsfrågan för att verifiera att du inte är en robot.',
+      invalid_recaptcha: 'Markera kryssrutan för att verifiera att du inte är en robot.'
     },
     signUp: {
       invalid_password: 'Lösenordet är ogiltigt.',
       'lock.fallback': 'Något gick fel vid registreringen.',
       password_dictionary_error: 'Lösenordet är för vanligt.',
+      password_leaked: 'Denna kombination av referenser upptäcktes i ett offentligt dataintrång på en annan webbplats. Innan ditt konto skapas, använd ett annat lösenord för att hålla det säkert.',
       password_no_user_info_error: 'Lösenordet baseras på personuppgifter.',
       password_strength_error: 'Lösenordet är för svagt.',
       user_exists: 'Användaren finns redan.',
@@ -104,7 +107,7 @@ export default {
   passwordlessEmailInstructions: 'Ange din e-postadress för att logga in<br>eller skapa ett konto',
   passwordlessSMSAlternativeInstructions:
     'Annars, ange ditt telefonnummer för att logga in<br>eller skapa ett konto',
-  passwordlessSMSCodeInstructions: 'Ett SMS med koden har skickats<br>till %s.',
+  passwordlessSMSCodeInstructions: 'Ett SMS med koden har skickats till %s.',
   passwordlessSMSInstructions: 'Ange ditt telefonnummer för att logga in<br>eller skapa ett konto',
   phoneNumberInputPlaceholder: 'ditt telefonnummer',
   resendCodeAction: 'Fick du ingen kod?',

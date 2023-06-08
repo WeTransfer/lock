@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import I from 'immutable';
 
-import { ReCAPTCHA } from '../../../field/captcha/recaptchav2';
+import { ReCAPTCHA } from '../../../field/captcha/recaptcha';
 
 const createLockMock = ({ provider = 'none', sitekey = '' } = {}) =>
   I.fromJS({
@@ -17,10 +17,12 @@ const createLockMock = ({ provider = 'none', sitekey = '' } = {}) =>
     }
   });
 
-describe('RecaptchaV2', () => {
+describe('Recaptcha v2', () => {
   it('should match the snapshot', () => {
-    const mockLock = createLockMock({ provider: 'recaptchav2', sitekey: 'mySiteKey' });
-    const wrapper = shallow(<ReCAPTCHA lock={mockLock} sitekey={'mySiteKey'} />);
+    const mockLock = createLockMock({ provider: 'recaptcha_v2', sitekey: 'mySiteKey' });
+    const wrapper = shallow(
+      <ReCAPTCHA provider={'recaptcha_v2'} lock={mockLock} sitekey={'mySiteKey'} />
+    );
 
     expect(wrapper).toMatchSnapshot();
   });
@@ -33,10 +35,10 @@ describe('RecaptchaV2', () => {
       document.getElementById('renderTest').remove();
     });
     it('injects the script', () => {
-      ReCAPTCHA.loadScript({ hl: 'en-US' }, document.body);
+      ReCAPTCHA.loadScript({ hl: 'en-US', provider: 'recaptcha_v2' }, document.body);
       expect(document.body.innerHTML).toContain('<div id="renderTest">');
       expect(document.body.innerHTML).toContain(
-        '<script src="https://www.google.com/recaptcha/api.js?hl=en-US'
+        '<script src="https://www.recaptcha.net/recaptcha/api.js?hl=en-US'
       );
     });
   });

@@ -42,12 +42,15 @@ export default {
     passwordless: {
       'bad.email': 'Sähköposti ei kelpaa',
       'bad.phone_number': 'Puhelinnumero ei kelpaa',
-      'lock.fallback': 'Olemme pahoillamme, jotain meni vikaan'
+      'lock.fallback': 'Olemme pahoillamme, jotain meni vikaan',
+      invalid_captcha: 'Ratkaise haastekysymys varmistaaksesi, että et ole robotti.',
+      invalid_recaptcha: 'Valitse valintaruutu varmistaaksesi, että et ole robotti.'
     },
     signUp: {
       invalid_password: 'Salasana ei kelpaa.',
       'lock.fallback': 'Olemme pahoillamme, mutta jotain meni vikaan kirjautumisen yhteydessä.',
       password_dictionary_error: 'Salasana on liian yleinen.',
+      password_leaked: 'Tämä valtuustietojen yhdistelmä havaittiin julkisessa tietoturvaloukkauksessa toisella verkkosivustolla. Ennen kuin luot tilisi, käytä toista salasanaa sen suojaamiseksi.',
       password_no_user_info_error: 'Salasana perustuu käyttäjätietoihin.',
       password_strength_error: 'Salasana on liian heikko.',
       user_exists: 'Käyttäjä on jo olemassa.',
@@ -108,7 +111,7 @@ export default {
   passwordlessEmailInstructions: 'Syötä sähköpostisi kirjautuaksesi<br/>tai luo käyttäjätunnus',
   passwordlessSMSAlternativeInstructions:
     'Muussa tapauksessa, syötä puhelinnumerosi kirjautuaksesi<br/>tai luo käyttäjätunnus',
-  passwordlessSMSCodeInstructions: 'Koodin sisältävä tekstiviesti on lähetetty<br/>numeroon %s.',
+  passwordlessSMSCodeInstructions: 'Koodin sisältävä tekstiviesti on lähetetty numeroon %s.',
   passwordlessSMSInstructions: 'Syötä puhelinnumerosi kirjautuaksesi<br/>tai luo käyttäjätunnus',
   phoneNumberInputPlaceholder: 'puhelinnumerosi',
   resendCodeAction: 'Etkö saanut koodia?',

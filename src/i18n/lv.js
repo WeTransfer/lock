@@ -40,12 +40,15 @@ export default {
     passwordless: {
       'bad.email': 'Nederīga e-pasta adrese',
       'bad.phone_number': 'Nederīgs tālruņa numurs',
-      'lock.fallback': 'Diemžēl radās problēma'
+      'lock.fallback': 'Diemžēl radās problēma',
+      invalid_captcha: 'Atrisiniet izaicinājuma jautājumu, lai pārliecinātos, ka neesat robots.',
+      invalid_recaptcha: 'Atzīmējiet izvēles rūtiņu, lai pārliecinātos, ka neesat robots.'
     },
     signUp: {
       invalid_password: 'Nederīga parole.',
       'lock.fallback': 'Diemžēl, mēģinot reģistrēties, radās problēma.',
       password_dictionary_error: 'Parrole ir pārāk bieži sastopama.',
+      password_leaked: 'Šī akreditācijas datu kombinācija tika konstatēta publiska datu pārkāpuma rezultātā citā vietnē. Pirms konta izveides, lūdzu, izmantojiet citu paroli, lai tas būtu drošībā.',
       password_no_user_info_error: 'Paroles pamatā ir lietotāja informācija.',
       password_strength_error: 'Parrole ir pārāk vienkārša.',
       user_exists: 'Lietotājs jau eksistē.',
@@ -108,7 +111,7 @@ export default {
     'Ievadiet savu e-pasta adresi, lai pieteiktos<br/>vai izveidotu kontu',
   passwordlessSMSAlternativeInstructions:
     'Vai arī ievadiet savu tālruņa numuru, lai pieteiktos<br/>vai izveidotu kontu',
-  passwordlessSMSCodeInstructions: 'Īsziņa ar kodu ir nosūtīta<br/>uz adresi %s.',
+  passwordlessSMSCodeInstructions: 'Īsziņa ar kodu ir nosūtīta uz adresi %s.',
   passwordlessSMSInstructions:
     'Ievadiet savu tālruņa numuru, lai pieteiktos<br/>vai izveidotu kontu',
   phoneNumberInputPlaceholder: 'jūsu tālruņa numurs',

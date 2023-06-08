@@ -35,12 +35,15 @@ export default {
     passwordless: {
       'bad.email': 'Die e-pos is ongeldig',
       'bad.phone_number': 'Die telefoonnommer is ongeldig',
-      'lock.fallback': 'Jammer, iets het verkeerd gegaan'
+      'lock.fallback': 'Jammer, iets het verkeerd gegaan',
+      invalid_captcha: "Los die uitdagingsvraag om te verifieer dat u nie 'n robot is nie.",
+      invalid_recaptcha: "Kies die merkblokkie om te verifieer dat u nie 'n robot is nie."
     },
     signUp: {
       invalid_password: 'Wagwoord is ongeldig.',
       'lock.fallback': 'Jammer, jou intekening het misluk.',
       password_dictionary_error: 'Wagwoord is te eenvoudig.',
+      password_leaked: "Hierdie kombinasie van geloofsbriewe is opgespoor in 'n publieke data-oortreding op 'n ander webwerf. Voordat jou rekening geskep word, gebruik asseblief 'n ander wagwoord om dit veilig te hou.",
       password_no_user_info_error: 'Wagwoord kan nie persoonlike inligting bevat nie.',
       password_strength_error: 'Wagwoord is swak.',
       user_exists: 'Gebruiker bestaan reeds.',
@@ -101,7 +104,7 @@ export default {
   passwordlessEmailInstructions: 'Vul jou e-pos in om inteken<br/>of skep n rekening',
   passwordlessSMSAlternativeInstructions:
     'Andersins vul jou telefoonnommer in om inteken<br/>of skep n rekening',
-  passwordlessSMSCodeInstructions: 'Ons stuur SMS met die kode <br/>na %s.',
+  passwordlessSMSCodeInstructions: 'Ons stuur SMS met die kode na %s.',
   passwordlessSMSInstructions:
     'Vul jou telenfoonnommer in om in te teken <br/>of skep jou rekening',
   phoneNumberInputPlaceholder: 'jou telefoonnommer',

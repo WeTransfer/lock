@@ -7,20 +7,18 @@ import * as l from '../../core/index';
 import { swap, updateEntity } from '../../store/index';
 import * as captchaField from '../captcha';
 import { getFieldValue, isFieldVisiblyInvalid } from '../index';
-import { ReCAPTCHA } from './recaptchav2';
+import { ReCAPTCHA, isRecaptcha } from './recaptcha';
 
 export default class CaptchaPane extends React.Component {
   render() {
-    const { i18n, lock, onReload } = this.props;
-
+    const { i18n, lock, onReload, isPasswordless } = this.props;
     const lockId = l.id(lock);
-
-    const captcha = l.captcha(lock);
-
+    const captcha = isPasswordless ? l.passwordlessCaptcha(lock) : l.captcha(lock);
     const value = getFieldValue(lock, 'captcha');
     const isValid = !isFieldVisiblyInvalid(lock, 'captcha');
+    const provider = captcha.get('provider');
 
-    if (captcha.get('provider') === 'recaptcha_v2') {
+    if (isRecaptcha(provider)) {
       function handleChange(value) {
         swap(updateEntity, 'lock', lockId, captchaField.set, value);
       }
@@ -31,6 +29,7 @@ export default class CaptchaPane extends React.Component {
 
       return (
         <ReCAPTCHA
+          provider={provider}
           sitekey={captcha.get('siteKey')}
           onChange={handleChange}
           onExpired={reset}
@@ -51,7 +50,7 @@ export default class CaptchaPane extends React.Component {
         : i18n.str(`captchaMathInputPlaceholder`);
 
     // TODO: blankErrorHint is deprecated.
-    // It is kept for backwards compatibiliy in the code for the customers overwriting
+    // It is kept for backwards compatibility in the code for the customers overwriting
     // it with languageDictionary. It can be removed in the next major release.
     return (
       <CaptchaInput

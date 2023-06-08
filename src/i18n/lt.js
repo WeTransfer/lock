@@ -39,12 +39,15 @@ export default {
     passwordless: {
       'bad.email': 'Neteisingas el.pašto adresas',
       'bad.phone_number': 'Neteisingas telefono numeris',
-      'lock.fallback': 'Atsiprašome, įvyko netikėta klaida.'
+      'lock.fallback': 'Atsiprašome, įvyko netikėta klaida.',
+      invalid_captcha: 'Išspręskite iššūkio klausimą ir įsitikinkite, kad nesate robotas.',
+      invalid_recaptcha: 'Pažymėkite žymimąjį laukelį, kad patikrintumėte, ar nesate robotas.'
     },
     signUp: {
       invalid_password: 'Slaptažodis neteisingas.',
       'lock.fallback': 'Atsiprašome, kažkas nutiko bandant užsiregistruoti.',
       password_dictionary_error: 'Šis slaptažodis yra per dažnai naudojamas.',
+      password_leaked: 'Šis kredencialų derinys buvo aptiktas per viešųjų duomenų pažeidimą kitoje svetainėje. Prieš kurdami paskyrą naudokite kitą slaptažodį, kad ji būtų saugi.',
       password_no_user_info_error: 'Slaptažodis remiantis vartotojų informacija.',
       password_strength_error: 'Šis slaptažodis yra per silpnas.',
       user_exists: 'Vartotojas jau egzistuoja.',
@@ -106,7 +109,7 @@ export default {
   passwordlessEmailInstructions: 'Įveskite el.pašto adresą prisijungti<br/>arba susikurti paskyrą',
   passwordlessSMSAlternativeInstructions:
     'Arba įveskite telefono numerį prisijungti<br/>arba susikurti paskyrą',
-  passwordlessSMSCodeInstructions: 'SMS su kodu buvo išsiųstas<br/>į %s.',
+  passwordlessSMSCodeInstructions: 'SMS su kodu buvo išsiųstas į %s.',
   passwordlessSMSInstructions: 'Įveskite telefono numerį prisijungti<br/>arba susikurti paskyrą',
   phoneNumberInputPlaceholder: 'Jūsų telefono numeris',
   resendCodeAction: 'Negavote kodo?',

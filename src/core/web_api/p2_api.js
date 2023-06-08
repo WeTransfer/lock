@@ -46,7 +46,8 @@ class Auth0APIClient {
       _telemetryInfo: telemetry,
       state,
       nonce,
-      scope
+      scope,
+      legacySameSiteCookie: opts.legacySameSiteCookie
     });
 
     this.authOpt = {
@@ -192,6 +193,10 @@ class Auth0APIClient {
 
   getChallenge(...params) {
     return this.client.client.getChallenge(...params);
+  }
+
+  getPasswordlessChallenge(...params) {
+    return this.client.client.passwordless.getChallenge(...params);
   }
 
   getUserCountry(cb) {

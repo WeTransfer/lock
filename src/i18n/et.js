@@ -39,12 +39,15 @@ export default {
     passwordless: {
       'bad.email': 'Vigane e-mail',
       'bad.phone_number': 'Vigane telefoninumber',
-      'lock.fallback': 'Vabandame, midagi läks valesti.'
+      'lock.fallback': 'Vabandame, midagi läks valesti.',
+      invalid_captcha: 'Lahendage väljakutseküsimus ja veenduge, et te pole robot.',
+      invalid_recaptcha: 'Valige märkeruut, et kontrollida, kas te pole robot.'
     },
     signUp: {
       invalid_password: 'Parool on vigane.',
       'lock.fallback': 'Vabandame, registreerumisel läks midagi valesti.',
       password_dictionary_error: 'Parool on liiga tavaline.',
+      password_leaked: 'See volikirjade kombinatsioon tuvastati teisel veebisaidil avalike andmetega seotud rikkumises. Enne konto loomist kasutage selle turvalisuse tagamiseks teist parooli.',
       password_no_user_info_error: 'Parool sisaldab kasutajainfot.',
       password_strength_error: 'Parool on liiga nõrk.',
       user_exists: 'Selline kasutaja on juba olemas.',
@@ -106,7 +109,7 @@ export default {
   passwordlessEmailInstructions: 'Sisesta oma e-mail, et sisse logida<br/>või konto luua',
   passwordlessSMSAlternativeInstructions:
     'Muidu, sisesta oma telefoninumber, et sisse logida<br/>või konto luua',
-  passwordlessSMSCodeInstructions: 'SMS koodiga saadeti numbrile: <br/> %s.',
+  passwordlessSMSCodeInstructions: 'SMS koodiga saadeti numbrile: %s.',
   passwordlessSMSInstructions: 'Sisesta oma telefoninumber, et sisse logida<br/>või konto luua',
   phoneNumberInputPlaceholder: 'sinu telefoninumber',
   resendCodeAction: 'Kas said koodi kätte?',

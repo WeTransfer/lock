@@ -38,12 +38,15 @@ export default {
     passwordless: {
       'bad.email': 'כתובת המייל אינה תקינה',
       'bad.phone_number': 'מספר הטלפון לא תקין',
-      'lock.fallback': 'אנו מתנצלים, משהו השתבש'
+      'lock.fallback': 'אנו מתנצלים, משהו השתבש',
+      invalid_captcha: 'לפתור את שאלת האתגר כדי לוודא שאתה לא רובוט.',
+      invalid_recaptcha: 'בחר בתיבת הסימון כדי לוודא שאתה לא רובוט.'
     },
     signUp: {
       invalid_password: 'סיסמא לא תקינה.',
       'lock.fallback': 'אנו מתנצלים, משהו השתבש במהלך ניסיון ההרשמה.',
       password_dictionary_error: 'סיסמא שכיחה מדי.',
+      password_leaked: 'שילוב זה של אישורים זוהה בפרצת מידע ציבורית באתר אחר. לפני יצירת החשבון שלך, אנא השתמש בסיסמה אחרת כדי לשמור על אבטחתו.',
       password_no_user_info_error: 'סיסמא מבוססת על פרטי המשתמש.',
       password_strength_error: 'סיסמא חלשה מדי.',
       user_exists: 'משתמש קיים במערכת.',

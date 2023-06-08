@@ -40,12 +40,15 @@ export default {
     passwordless: {
       'bad.email': 'E-posta geçerli değil',
       'bad.phone_number': 'Telefon numarası geçerli değil',
-      'lock.fallback': 'Özür dileriz, bir hata oluştu'
+      'lock.fallback': 'Özür dileriz, bir hata oluştu',
+      invalid_captcha: 'Robot olmadığınızı doğrulamak için meydan okuma sorusunu çözün.',
+      invalid_recaptcha: 'Robot olmadığınızı doğrulamak için onay kutusunu seçin.'
     },
     signUp: {
       invalid_password: 'Şifre geçersiz.',
       'lock.fallback': 'Özür dileriz, kaydolurken bir hata oluştu.',
       password_dictionary_error: 'Şifre çok genel.',
+      password_leaked: 'Bu kimlik bilgileri kombinasyonu, başka bir web sitesinde herkese açık bir veri ihlali sırasında tespit edildi. Hesabınız oluşturulmadan önce, güvenliğini sağlamak için lütfen farklı bir şifre kullanın.',
       password_no_user_info_error: 'Şifre kullanıcı bilgilerini içeriyor.',
       password_strength_error: 'Şifre çok zayıf.',
       user_exists: 'Bu kullanıcı zaten var.',
@@ -108,7 +111,7 @@ export default {
     'Giriş yapmak için e-posta adresinizi girin<br/>veya bir hesap oluşturun',
   passwordlessSMSAlternativeInstructions:
     'Aksi halde, giriş yapmak için telefon numaranızı girin<br/>veya bir hesap oluşturun',
-  passwordlessSMSCodeInstructions: 'Size kod içeren bir SMS gönderdik<br/>%s.',
+  passwordlessSMSCodeInstructions: 'Size kod içeren bir SMS gönderdik %s.',
   passwordlessSMSInstructions:
     'Giriş yapmak için telefon numaranızı girin<br/>veya bir hesap oluşturun',
   phoneNumberInputPlaceholder: 'telefon numaranız',

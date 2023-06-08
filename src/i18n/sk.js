@@ -39,12 +39,15 @@ export default {
     passwordless: {
       'bad.email': 'Neplatný e-mail',
       'bad.phone_number': 'Neplatné telefónne číslo',
-      'lock.fallback': 'Ospravedlňujeme sa, niečo nie je v poriadku'
+      'lock.fallback': 'Ospravedlňujeme sa, niečo nie je v poriadku',
+      invalid_captcha: 'Vyriešte výzvu a overte, či nie ste robot.',
+      invalid_recaptcha: 'Začiarknutím políčka overíte, či nie ste robot.'
     },
     signUp: {
       invalid_password: 'Neplatné heslo.',
       'lock.fallback': 'Prepáčte, pokus o prihlásenie neprebehol v poriadku.',
       password_dictionary_error: 'Heslo je príliš všeobecné',
+      password_leaked: 'Táto kombinácia poverení bola zistená pri porušení verejných údajov na inej webovej lokalite. Pred vytvorením účtu použite iné heslo, aby ste ho udržali v bezpečí.',
       password_no_user_info_error: 'Heslo je založené na užívateľských informáciách.',
       password_strength_error: 'Heslo je príliš slabé.',
       user_exists: 'Používateľ už existuje.',
@@ -107,7 +110,7 @@ export default {
   passwordlessEmailInstructions: 'Pre prihlásenie zadajte váš e-mail<br/>alebo vytvorte účet',
   passwordlessSMSAlternativeInstructions:
     'Buď, zadajte vaše telefónne číslo pre prihlásenie<br/>alebo vytvorte účet',
-  passwordlessSMSCodeInstructions: 'Poslali sme Vám SMS s kódom<br/>na telefónne číslo %s.',
+  passwordlessSMSCodeInstructions: 'Poslali sme Vám SMS s kódom na telefónne číslo %s.',
   passwordlessSMSInstructions:
     'Pre prihlásenie zadajte Vaše telefónne číslo<br/>alebo vytvorte účet',
   phoneNumberInputPlaceholder: 'Vaše telefónne číslo',

@@ -42,12 +42,15 @@ export default {
     passwordless: {
       'bad.email': 'O endereço de correio eletrónico é inválido',
       'bad.phone_number': 'O número de telefone é inválido',
-      'lock.fallback': 'Lamentamos, correu um erro.'
+      'lock.fallback': 'Lamentamos, correu um erro.',
+      invalid_captcha: 'Resolva a questão do desafio para verificar se você não é um robô.',
+      invalid_recaptcha: 'Marque a caixa de seleção para verificar se você não é um robô.'
     },
     signUp: {
       invalid_password: 'Palavra-passe inválida.',
       'lock.fallback': 'Lamentamos, ocorreu um problema ao tentar registar-se.',
       password_dictionary_error: 'Palavra-passe demasiado simples.',
+      password_leaked: 'Essa combinação de credenciais foi detectada em uma violação de dados públicos em outro site. Antes de criar sua conta, use uma senha diferente para mantê-la segura.',
       password_no_user_info_error: 'Palavra-passe baseada nos dados do utilizador.',
       password_strength_error: 'Palavra-passe demasiado fraca.',
       user_exists: 'O utilizador já existe.',
@@ -110,7 +113,7 @@ export default {
     'Introduza o seu endereço de correio eletrónico para iniciar sessão<br/>ou criar uma conta',
   passwordlessSMSAlternativeInstructions:
     'Caso contrário, introduza o seu número de telefone para iniciar sessão<br/>ou criar uma conta',
-  passwordlessSMSCodeInstructions: 'Foi enviada mensagem por SMS com o código<br/>para %s.',
+  passwordlessSMSCodeInstructions: 'Foi enviada mensagem por SMS com o código para %s.',
   passwordlessSMSInstructions:
     'Introduza o seu número de telefone para iniciar sessão<br/>ou criar uma conta',
   phoneNumberInputPlaceholder: 'o seu número de telefone',

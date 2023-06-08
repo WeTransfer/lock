@@ -39,12 +39,15 @@ export default {
     passwordless: {
       'bad.email': 'Adresa e-pošte je nevažeća',
       'bad.phone_number': 'Broj telefona je nevažeći',
-      'lock.fallback': 'Žao nam je, došlo je do greške'
+      'lock.fallback': 'Žao nam je, došlo je do greške',
+      invalid_captcha: 'Решите изазовно питање да бисте потврдили да нисте робот.',
+      invalid_recaptcha: 'Потврдите избор у пољу за потврду да нисте робот.'
     },
     signUp: {
       invalid_password: 'Lozinka je nevažeća.',
       'lock.fallback': 'Žao nam je, došlo je do greške prilikom pokušaja registracije.',
       password_dictionary_error: 'Lozinka je previše česta.',
+      password_leaked: 'Ова комбинација акредитива је откривена приликом повреде јавних података на другој веб локацији. Пре него што направите налог, користите другу лозинку да бисте га заштитили.',
       password_no_user_info_error: 'Lozinka se zasniva na podacima korisnika.',
       password_strength_error: 'Lozinka je previše slaba.',
       user_exists: 'Korisnik već postoji.',
@@ -107,7 +110,7 @@ export default {
     'Unesite adresu e-pošte da biste se prijavili<br/> ili kreirali nalog',
   passwordlessSMSAlternativeInstructions:
     'U suprotnom, unesite broj telefona da biste se prijavili<br/> ili kreirajte nalog',
-  passwordlessSMSCodeInstructions: 'SMS poruka sa kôdom poslata je <br/>na %s.',
+  passwordlessSMSCodeInstructions: 'SMS poruka sa kôdom poslata je na %s.',
   passwordlessSMSInstructions:
     'Unesite broj telefona da biste se prijavili<br/> ili kreirajte nalog',
   phoneNumberInputPlaceholder: 'vaš broj telefona',

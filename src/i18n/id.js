@@ -41,12 +41,15 @@ export default {
     passwordless: {
       'bad.email': 'Email ini tidak valid.',
       'bad.phone_number': 'Nomor telepon tidak valid.',
-      'lock.fallback': 'Maaf, terjadi kesalahan'
+      'lock.fallback': 'Maaf, terjadi kesalahan',
+      invalid_captcha: 'Selesaikan pertanyaan tantangan untuk memverifikasi bahwa Anda bukan robot.',
+      invalid_recaptcha: 'Pilih kotak centang untuk memverifikasi bahwa Anda bukan robot.'
     },
     signUp: {
       invalid_password: 'Kata sandi tidak valid.',
       'lock.fallback': 'Maaf, terjadi kesalahan saat mencoba mendaftar.',
       password_dictionary_error: 'Kata sandi terlalu umum.',
+      password_leaked: 'Kombinasi kredensial ini terdeteksi dalam pelanggaran data publik di situs web lain. Sebelum akun Anda dibuat, harap gunakan kata sandi yang berbeda untuk menjaganya tetap aman.',
       password_no_user_info_error: 'Kata sandi didasarkan pada informasi pengguna.',
       password_strength_error: 'Kata sandi terlalu lemah.',
       user_exists: 'Pengguna sudah ada.',
@@ -109,7 +112,7 @@ export default {
   passwordlessEmailInstructions: 'Masukkan email Anda untuk masuk<br/>atau buat akun',
   passwordlessSMSAlternativeInstructions:
     'Atau, masukkan nomor telepon Anda untuk masuk<br/>atau buat akun',
-  passwordlessSMSCodeInstructions: 'SMS dengan kode telah dikirimkan<br/>ke %s.',
+  passwordlessSMSCodeInstructions: 'SMS dengan kode telah dikirimkan ke %s.',
   passwordlessSMSInstructions: 'Masukkan nomor telepon Anda untuk masuk<br/>atau buat akun',
   phoneNumberInputPlaceholder: 'nomor telepon Anda',
   resendCodeAction: 'Tidak mendapatkan kodenya?',

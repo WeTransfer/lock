@@ -39,12 +39,15 @@ export default {
     passwordless: {
       'bad.email': 'البريد الإلكتروني غير صالح.',
       'bad.phone_number': 'رقم الهاتف غير صالح.',
-      'lock.fallback': 'المعذرة، حصل خطأ ما.'
+      'lock.fallback': 'المعذرة، حصل خطأ ما.',
+      invalid_captcha: 'حل سؤال التحدي للتحقق من أنك لست روبوت.',
+      invalid_recaptcha: 'حدد مربع الاختيار للتحقق من أنك لست روبوتًا.'
     },
     signUp: {
       invalid_password: 'كلمة المرور غير صالحة.',
       'lock.fallback': 'المعذرة، حصل خطأ ما خلال محاولة إنشاء الحساب.',
       password_dictionary_error: 'كلمة المرور متداولة جداً.',
+      password_leaked: 'تم اكتشاف هذا المزيج من بيانات الاعتماد في خرق بيانات عام على موقع ويب آخر. قبل إنشاء حسابك ، يرجى استخدام كلمة مرور مختلفة لإبقائه آمنًا.',
       password_no_user_info_error: 'ترتكز كلمة المرور على اسم المستخدم.',
       password_strength_error: 'كلمة المرور ضعيفة جداً.',
       user_exists: 'المستخدم موجود بالفعل.',

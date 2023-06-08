@@ -1,10 +1,12 @@
-import Immutable, { Map } from 'immutable';
 import { getEntity, read, swap, updateEntity } from '../../store/index';
 import webApi from '../../core/web_api';
 import { closeLock, logIn as coreLogIn, logInSuccess, validateAndSubmit } from '../../core/actions';
 import * as l from '../../core/index';
 import * as c from '../../field/index';
+import { sanitize } from 'dompurify';
+
 import {
+  databaseConnection,
   databaseConnectionName,
   databaseConnectionRequiresUsername,
   databaseLogInWithEmail,
@@ -12,14 +14,18 @@ import {
   setScreen,
   shouldAutoLogin,
   toggleTermsAcceptance as internalToggleTermsAcceptance,
-  additionalSignUpFields
+  additionalSignUpFields,
+  signUpHideUsernameField
 } from './index';
+
 import * as i18n from '../../i18n';
+import { setCaptchaParams, showMissingCaptcha, swapCaptcha } from '../captcha';
 
 export function logIn(id, needsMFA = false) {
   const m = read(getEntity, 'lock', id);
   const usernameField = databaseLogInWithEmail(m) ? 'email' : 'username';
   const username = c.getFieldValue(m, usernameField);
+
   const params = {
     connection: databaseConnectionName(m),
     username: username,
@@ -27,13 +33,14 @@ export function logIn(id, needsMFA = false) {
   };
 
   const fields = [usernameField, 'password'];
+  const isCaptchaValid = setCaptchaParams(m, params, false, fields);
 
-  const isCaptchaValid = setCaptchaParams(m, params, fields);
   if (!isCaptchaValid) {
     return showMissingCaptcha(m, id);
   }
 
   const mfaCode = c.getFieldValue(m, 'mfa_code');
+
   if (needsMFA) {
     params['mfa_code'] = mfaCode;
     fields.push('mfa_code');
@@ -46,17 +53,31 @@ export function logIn(id, needsMFA = false) {
 
     if (error) {
       const wasInvalid = error && error.code === 'invalid_captcha';
-      return swapCaptcha(id, wasInvalid, next);
+      return swapCaptcha(id, false, wasInvalid, next);
     }
 
     next();
   });
 }
 
+function generateRandomUsername(length) {
+  let result = '';
+  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
 export function signUp(id) {
   const m = read(getEntity, 'lock', id);
   const fields = ['email', 'password'];
-  if (databaseConnectionRequiresUsername(m)) fields.push('username');
+
+  // Skip the username validation if signUpHideUsernameField option is enabled.
+  // We will generate a random username to avoid name collusion before we make the signup API call.
+  if (databaseConnectionRequiresUsername(m) && !signUpHideUsernameField(m)) fields.push('username');
+
   additionalSignUpFields(m).forEach(x => fields.push(x.get('name')));
 
   validateAndSubmit(id, fields, m => {
@@ -67,13 +88,19 @@ export function signUp(id) {
       autoLogin: shouldAutoLogin(m)
     };
 
-    const isCaptchaValid = setCaptchaParams(m, params, fields);
+    const isCaptchaValid = setCaptchaParams(m, params, false, fields);
     if (!isCaptchaValid) {
       return showMissingCaptcha(m, id);
     }
 
     if (databaseConnectionRequiresUsername(m)) {
-      params.username = c.getFieldValue(m, 'username');
+      if (signUpHideUsernameField(m)) {
+        const usernameValidation = databaseConnection(m).getIn(['validation', 'username']);
+        const range = usernameValidation ? usernameValidation.toJS() : { max: 15 };
+        params.username = generateRandomUsername(range.max);
+      } else {
+        params.username = c.getFieldValue(m, 'username');
+      }
     }
 
     if (!additionalSignUpFields(m).isEmpty()) {
@@ -81,7 +108,8 @@ export function signUp(id) {
       additionalSignUpFields(m).forEach(x => {
         const storage = x.get('storage');
         const fieldName = x.get('name');
-        const fieldValue = c.getFieldValue(m, x.get('name'));
+        const fieldValue = sanitize(c.getFieldValue(m, x.get('name')), { ALLOWED_TAGS: [] });
+
         switch (storage) {
           case 'root':
             if (fieldValue) {
@@ -98,19 +126,35 @@ export function signUp(id) {
       });
     }
 
-    webApi.signUp(id, params, (error, result, popupHandler, ...args) => {
-      if (error) {
-        if (!!popupHandler) {
-          popupHandler._current_popup.kill();
-        }
-        const wasInvalidCaptcha = error && error.code === 'invalid_captcha';
-        swapCaptcha(id, wasInvalidCaptcha, () => {
-          setTimeout(() => signUpError(id, error), 250);
-        });
-      } else {
-        signUpSuccess(id, result, popupHandler, ...args);
+    const errorHandler = (error, popupHandler) => {
+      if (!!popupHandler) {
+        popupHandler._current_popup.kill();
       }
-    });
+
+      const wasInvalidCaptcha = error && error.code === 'invalid_captcha';
+
+      swapCaptcha(id, false, wasInvalidCaptcha, () => {
+        setTimeout(() => signUpError(id, error), 250);
+      });
+    };
+
+    try {
+      // For now, always pass 'null' for the context as we don't need it yet.
+      // If we need it later, it'll save a breaking change in hooks already in use.
+      const context = null;
+
+      l.runHook(m, 'signingUp', context, () => {
+        webApi.signUp(id, params, (error, result, popupHandler, ...args) => {
+          if (error) {
+            errorHandler(error, popupHandler);
+          } else {
+            signUpSuccess(id, result, popupHandler, ...args);
+          }
+        });
+      });
+    } catch (e) {
+      errorHandler(e);
+    }
   });
 }
 
@@ -160,6 +204,8 @@ export function signUpError(id, error) {
     PasswordStrengthError: 'password_strength_error'
   };
 
+  l.emitEvent(m, 'signup error', error);
+
   const errorKey =
     (error.code === 'invalid_password' && invalidPasswordKeys[error.name]) || error.code;
 
@@ -167,11 +213,14 @@ export function signUpError(id, error) {
     i18n.html(m, ['error', 'signUp', errorKey]) ||
     i18n.html(m, ['error', 'signUp', 'lock.fallback']);
 
-  l.emitEvent(m, 'signup error', error);
+  if (error.code === 'hook_error') {
+    swap(updateEntity, 'lock', id, l.setSubmitting, false, error.description || errorMessage);
+    return;
+  }
 
   if (errorKey === 'invalid_captcha') {
     errorMessage = i18n.html(m, ['error', 'login', errorKey]);
-    return swapCaptcha(id, true, () => {
+    return swapCaptcha(id, false, true, () => {
       swap(updateEntity, 'lock', id, l.setSubmitting, false, errorMessage);
     });
   }
@@ -267,66 +316,4 @@ export function toggleTermsAcceptance(id) {
 
 export function showLoginMFAActivity(id, fields = ['mfa_code']) {
   swap(updateEntity, 'lock', id, setScreen, 'mfaLogin', fields);
-}
-
-/**
- * Get a new challenge and display the new captcha image.
- *
- * @param {number} id The id of the Lock instance.
- * @param {boolean} wasInvalid A boolean indicating if the previous captcha was invalid.
- * @param {Function} [next] A callback.
- */
-export function swapCaptcha(id, wasInvalid, next) {
-  return webApi.getChallenge(id, (err, newCaptcha) => {
-    if (!err && newCaptcha) {
-      swap(updateEntity, 'lock', id, l.setCaptcha, newCaptcha, wasInvalid);
-    }
-    if (next) {
-      next();
-    }
-  });
-}
-
-/**
- * Display the error message of missing captcha in the header of lock.
- *
- * @param {Object} m model
- * @param {Number} id
- */
-function showMissingCaptcha(m, id) {
-  const captchaConfig = l.captcha(m);
-  const captchaError =
-    captchaConfig.get('provider') === 'recaptcha_v2' ? 'invalid_recaptcha' : 'invalid_captcha';
-  const errorMessage = i18n.html(m, ['error', 'login', captchaError]);
-  swap(updateEntity, 'lock', id, m => {
-    m = l.setSubmitting(m, false, errorMessage);
-    return c.showInvalidField(m, 'captcha');
-  });
-  return m;
-}
-
-/**
- * Set the captcha value in the fields object before sending the request.
- *
- * @param {Object} m model
- * @param {Object} params
- * @param {Object} fields
- *
- * @returns {Boolean} returns true if is required and missing the response from the user
- */
-function setCaptchaParams(m, params, fields) {
-  const captchaConfig = l.captcha(m);
-  const isCaptchaRequired = captchaConfig && l.captcha(m).get('required');
-  if (!isCaptchaRequired) {
-    return true;
-  }
-  const captcha = c.getFieldValue(m, 'captcha');
-  //captcha required and missing
-  if (!captcha) {
-    return false;
-  }
-
-  params['captcha'] = captcha;
-  fields.push('captcha');
-  return true;
 }

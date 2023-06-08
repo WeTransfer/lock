@@ -9,6 +9,7 @@ import { getFieldValue, hideInvalidFields } from '../../field/index';
 import { emailLocalPart } from '../../field/email';
 import { logIn as coreLogIn } from '../../core/actions';
 import * as l from '../../core/index';
+import { setCaptchaParams, showMissingCaptcha, swapCaptcha } from '../captcha';
 
 // TODO: enterprise connections should not depend on database
 // connections. However, we now allow a username input to contain also
@@ -41,6 +42,8 @@ export function logIn(id) {
   const ssoConnection = matchConnection(m, email);
   const enterpriseConnection = enterpriseActiveFlowConnection(m);
   const connectionScopes = getConnectionScopesFrom(m, ssoConnection || enterpriseConnection);
+  const usernameField = databaseLogInWithEmail(m) ? 'email' : 'username';
+  const fields = [usernameField, 'password'];
 
   const params = {
     connection_scope: connectionScopes ? connectionScopes.toJS() : undefined
@@ -48,6 +51,12 @@ export function logIn(id) {
 
   if (ssoConnection && !isHRDActive(m)) {
     return logInSSO(id, ssoConnection, params);
+  }
+
+  const isCaptchaValid = setCaptchaParams(m, params, false, fields);
+
+  if (!isCaptchaValid && !ssoConnection) {
+    return showMissingCaptcha(m, id);
   }
 
   logInActiveFlow(id, params);
@@ -64,13 +73,21 @@ function logInActiveFlow(id, params) {
     ? emailLocalPart(originalUsername)
     : originalUsername;
 
-  coreLogIn(id, ['password', usernameField], {
-    ...params,
-    connection: connection ? connection.get('name') : null,
-    username: username,
-    password: getFieldValue(m, 'password'),
-    login_hint: username
-  });
+  coreLogIn(
+    id,
+    ['password', usernameField],
+    {
+      ...params,
+      connection: connection ? connection.get('name') : null,
+      username: username,
+      password: getFieldValue(m, 'password'),
+      login_hint: username
+    },
+    (id, error, fields, next) => {
+      const wasCaptchaInvalid = error && error.code === 'invalid captcha';
+      swapCaptcha(id, false, wasCaptchaInvalid, next);
+    }
+  );
 }
 
 function logInSSO(id, connection, params) {

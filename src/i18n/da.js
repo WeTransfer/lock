@@ -40,12 +40,15 @@ export default {
     passwordless: {
       'bad.email': 'Denne e-mail er ugyldig',
       'bad.phone_number': 'Dette telefonnummer er ugyldigt',
-      'lock.fallback': 'Vi beklager, men der skete en fejl'
+      'lock.fallback': 'Vi beklager, men der skete en fejl',
+      invalid_captcha: 'Løs udfordringsspørgsmålet for at kontrollere, at du ikke er en robot.',
+      invalid_recaptcha: 'Marker afkrydsningsfeltet for at kontrollere, at du ikke er en robot.'
     },
     signUp: {
       invalid_password: 'Adgangskoden er ugyldigt',
       'lock.fallback': 'Vi beklager, men der skete en fejl, da du forsøgte at oprette dig.',
       password_dictionary_error: 'Adgangskoden er for almindelig.',
+      password_leaked: 'Denne kombination af legitimationsoplysninger blev opdaget i et offentligt databrud på et andet websted. Før din konto oprettes, skal du bruge en anden adgangskode for at holde den sikker.',
       password_no_user_info_error: 'Adgangskoden indeholder information om din bruger.',
       password_strength_error: 'Adgangskoden er for svag.',
       user_exists: 'Denne bruger eksisterer allerede.',
@@ -107,7 +110,7 @@ export default {
   passwordlessEmailInstructions: 'Indtast din e-mail for at logge ind<br/>eller oprette en konto',
   passwordlessSMSAlternativeInstructions:
     'Ellers, indtast dit telefonnummer for at logge ind<br/>eller oprette en konto',
-  passwordlessSMSCodeInstructions: 'En SMS med koden er sendt<br/>til %s.',
+  passwordlessSMSCodeInstructions: 'En SMS med koden er sendt til %s.',
   passwordlessSMSInstructions:
     'Indtast dit telefonnummer for at logge ind<br/>eller oprette en konto',
   phoneNumberInputPlaceholder: 'dit telefonnummer',
