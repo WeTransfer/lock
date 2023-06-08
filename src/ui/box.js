@@ -1,17 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import CSSCore from '../CSSCore';
 import Container from './box/container';
 
 class ContainerManager {
   ensure(id, shouldAppend) {
-    let container = global.document.getElementById(id);
+    let container = window.document.getElementById(id);
 
     if (!container && shouldAppend) {
-      container = global.document.createElement('div');
+      container = window.document.createElement('main');
       container.id = id;
       container.className = 'auth0-lock-container';
-      global.document.body.appendChild(container);
+      window.document.body.appendChild(container);
     }
 
     if (!container) {
@@ -33,21 +33,30 @@ class Renderer {
     const container = this.containerManager.ensure(containerId, isModal);
 
     if (isModal && !this.modals[containerId]) {
-      CSSCore.addClass(global.document.getElementsByTagName('html')[0], 'auth0-lock-html');
+      CSSCore.addClass(window.document.getElementsByTagName('html')[0], 'auth0-lock-html');
     }
     // eslint-disable-next-line
-    const component = ReactDOM.render(<Container {...props} />, container);
+    const root = this.modals[containerId] ? this.modals[containerId].root : createRoot(container);
 
-    if (isModal) {
-      this.modals[containerId] = component;
+    if (!this.modals[containerId]) {
+      this.modals[containerId] = { root };
     }
 
-    return component;
+    root.render(
+      <Container
+        {...props}
+        ref={component => {
+          if (component && isModal) {
+            this.modals[containerId].component = component;
+          }
+        }}
+      />
+    );
   }
 
   remove(containerId) {
-    if (this.modals[containerId]) {
-      this.modals[containerId].hide();
+    if (this.modals[containerId] && this.modals[containerId].component) {
+      this.modals[containerId].component.hide();
       setTimeout(() => this.unmount(containerId), 1000);
     } else {
       this.unmount(containerId);
@@ -65,9 +74,10 @@ class Renderer {
     }
 
     if (this.modals[containerId]) {
+      this.modals[containerId].root.unmount();
       delete this.modals[containerId];
 
-      CSSCore.removeClass(global.document.getElementsByTagName('html')[0], 'auth0-lock-html');
+      CSSCore.removeClass(window.document.getElementsByTagName('html')[0], 'auth0-lock-html');
     }
   }
 }

@@ -37,12 +37,15 @@ export default {
     passwordless: {
       'bad.email': 'O email é inválido',
       'bad.phone_number': 'O número de telefone é inválido',
-      'lock.fallback': 'Sentimos muito, algo deu errado'
+      'lock.fallback': 'Sentimos muito, algo deu errado',
+      invalid_captcha: 'Resolva a questão do desafio para verificar se você não é um robô.',
+      invalid_recaptcha: 'Marque a caixa de seleção para verificar se você não é um robô.'
     },
     signUp: {
       invalid_password: 'A senha é inválida.',
       'lock.fallback': 'Sentimos muito, algo deu errado ao tentar se inscrever.',
       password_dictionary_error: 'A senha é muito comum.',
+      password_leaked: 'Essa combinação de credenciais foi detectada em uma violação de dados públicos em outro site. Antes de criar sua conta, use uma senha diferente para mantê-la segura.',
       password_no_user_info_error: 'A senha é baseado em informações do usuário.',
       password_strength_error: 'A senha é muito fraca.',
       user_exists: 'O usuário já existe.',
@@ -103,7 +106,7 @@ export default {
   passwordlessEmailInstructions: 'Digite seu email para entrar<br/>ou criar uma conta',
   passwordlessSMSAlternativeInstructions:
     'Senão, digite seu telefone para entrar<br/>ou criar uma conta',
-  passwordlessSMSCodeInstructions: 'Um SMS com o código foi enviado<br/>para %s.',
+  passwordlessSMSCodeInstructions: 'Um SMS com o código foi enviado para %s.',
   passwordlessSMSInstructions: 'Digite seu telefone para entrar<br/>ou criar uma conta',
   phoneNumberInputPlaceholder: 'seu número de telefone',
   resendCodeAction: 'Não recebeu o código?',

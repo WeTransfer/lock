@@ -40,12 +40,15 @@ export default {
     passwordless: {
       'bad.email': 'E-poçt düzgün deyil',
       'bad.phone_number': 'Telefon nömrəsi düzgün deyil',
-      'lock.fallback': 'Üzr istəyirik, səhv oldu'
+      'lock.fallback': 'Üzr istəyirik, səhv oldu',
+      invalid_captcha: 'Daxil etdiyiniz mətn səhv idi. <br /> Lütfən, yenidən cəhd edin.',
+      invalid_recaptcha: 'Robot olmadığınızı təsdiqləmək üçün onay qutusunu seçin.'
     },
     signUp: {
       invalid_password: 'Şifrə yanlışdır.',
       'lock.fallback': 'Üzr istəyirik, qeydiyyatdan keçmə zamanı səhv oldu.',
       password_dictionary_error: 'Şifrə çox sadədir.',
+      password_leaked: 'Etibarnamələrin bu kombinasiyası başqa vebsaytda ictimai məlumatların pozulması zamanı aşkar edilib. Hesabınızı yaratmazdan əvvəl onu təhlükəsiz saxlamaq üçün başqa parol istifadə edin.',
       password_no_user_info_error: 'Şifrə istifadəçi məlumatlarını ehtiva edir.',
       password_strength_error: 'Şifrə çox sadədir.',
       user_exists: 'Bu istifadəçi artıq mövcuddur.',
@@ -109,7 +112,7 @@ export default {
     'Giriş üçün e-mail adresinizi daxil edin<br/>və ya qeydiyyatdan keçin',
   passwordlessSMSAlternativeInstructions:
     'Əks halda, giriş üçün telefon nömrənizi daxil edin<br/>və ya qeydiyyatdan keçin',
-  passwordlessSMSCodeInstructions: 'Sizə SMS göndərdik<br/>%s.',
+  passwordlessSMSCodeInstructions: 'Sizə SMS göndərdik %s.',
   passwordlessSMSInstructions:
     'Giriş üçün telefon nömrənizi daxil edin<br/>və ya qeydiyyatdan keçin',
   phoneNumberInputPlaceholder: 'telefon nömrəniz',

@@ -41,12 +41,15 @@ export default {
     passwordless: {
       'bad.email': 'Ugyldig e-postadresse',
       'bad.phone_number': 'Ugyldig telefonnummer',
-      'lock.fallback': 'Beklagar, men noko gjekk galt'
+      'lock.fallback': 'Beklagar, men noko gjekk galt',
+      invalid_captcha: 'Løs utfordringsspørsmålet for å bekrefte at du ikke er en robot.',
+      invalid_recaptcha: 'Merk av i avmerkingsboksen for å bekrefte at du ikke er en robot.'
     },
     signUp: {
       invalid_password: 'Ugyldig passord.',
       'lock.fallback': 'Beklagar, men noko gjekk skeis i registreringa.',
       password_dictionary_error: 'Passordet er for enkelt.',
+      password_leaked: 'Denne kombinasjonen av legitimasjon ble oppdaget i et offentlig datainnbrudd på et annet nettsted. Før kontoen din opprettes, vennligst bruk et annet passord for å holde det sikkert.',
       password_no_user_info_error: 'Passordet er basert på kjende bruksdata.',
       password_strength_error: 'Passordet er for svakt.',
       user_exists: 'Denne brukaren eksisterer allereie.',
@@ -109,7 +112,7 @@ export default {
     'Skriv inn di e-postadresse for å logge inn<br/>eller opprette ein brukarkonto',
   passwordlessSMSAlternativeInstructions:
     'Eller, tast inn ditt mobilnummer for å logge inn<br/>eller opprette ein brukarkonto',
-  passwordlessSMSCodeInstructions: 'Ein SMS med kode er sendt<br/>til %s.',
+  passwordlessSMSCodeInstructions: 'Ein SMS med kode er sendt til %s.',
   passwordlessSMSInstructions:
     'Tast inn ditt mobilnummer for å logge inn<br/>eller opprette ein brukarkonto',
   phoneNumberInputPlaceholder: 'ditt mobilnummer',

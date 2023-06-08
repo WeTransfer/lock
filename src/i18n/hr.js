@@ -42,12 +42,15 @@ export default {
     passwordless: {
       'bad.email': 'Neispravna adresa elektroničke pošte',
       'bad.phone_number': 'Neispravan broj telefona',
-      'lock.fallback': 'Ispričavamo se, ali nešto je pošlo po zlu.'
+      'lock.fallback': 'Ispričavamo se, ali nešto je pošlo po zlu.',
+      invalid_captcha: 'Riješite izazovno pitanje kako biste provjerili da niste robot.',
+      invalid_recaptcha: 'Označite potvrdni okvir da biste potvrdili da niste robot.'
     },
     signUp: {
       invalid_password: 'Lozinka je neispravna.',
       'lock.fallback': 'Ispričavamo se, ali nešto je pošlo po zlu tijekom pokušaja registracije.',
       password_dictionary_error: 'Lozinka je uobičajena.',
+      password_leaked: 'Ova kombinacija vjerodajnica otkrivena je u povredi javnih podataka na drugoj web stranici. Prije izrade vašeg računa upotrijebite drugu zaporku kako biste ga zaštitili.',
       password_no_user_info_error: 'Lozinka se zasniva na korisničkim podatcima.',
       password_strength_error: 'Lozinka je preslaba.',
       user_exists: 'Korisnik već postoji.',
@@ -111,7 +114,7 @@ export default {
     'Upišite svoju adresu elektroničke pošte kako biste se prijavili<br/>ili napravite račun.',
   passwordlessSMSAlternativeInstructions:
     'U protivnom, upišite svoj broj telefona kako biste se prijavili<br/>ili napravite račun.',
-  passwordlessSMSCodeInstructions: 'Tekstualna poruka s kôdom poslana vam je<br/>na %s.',
+  passwordlessSMSCodeInstructions: 'Tekstualna poruka s kôdom poslana vam je na %s.',
   passwordlessSMSInstructions:
     'Upišite svoj broj telefona kako biste se prijavili<br/>ili napravite račun.',
   phoneNumberInputPlaceholder: 'vaš broj telefona',

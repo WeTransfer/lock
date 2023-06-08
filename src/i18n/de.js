@@ -42,13 +42,16 @@ export default {
     passwordless: {
       'bad.email': 'Diese E-Mail-Adresse ist ungültig',
       'bad.phone_number': 'Diese Telefonnummer ist ungültig',
-      'lock.fallback': 'Es tut uns leid, etwas ist schiefgelaufen.'
+      'lock.fallback': 'Es tut uns leid, etwas ist schiefgelaufen.',
+      invalid_captcha: 'Lösen Sie die Herausforderungsfrage, um sicherzustellen, dass Sie kein Roboter sind.',
+      invalid_recaptcha: 'Aktivieren Sie das Kontrollkästchen, um sicherzustellen, dass Sie kein Roboter sind.'
     },
     signUp: {
       invalid_password: 'Passwort ist ungültig.',
       'lock.fallback':
         'Es tut uns leid, beim Verarbeiten der Registrierung ist ein Fehler aufgetreten.',
       password_dictionary_error: 'Das Passwort ist zu verbreitet.',
+      password_leaked: 'Diese Kombination von Anmeldeinformationen wurde bei einer öffentlichen Datenschutzverletzung auf einer anderen Website entdeckt. Bevor Ihr Konto erstellt wird, verwenden Sie bitte ein anderes Passwort, um es zu schützen.',
       password_no_user_info_error: 'Das Passwort basiert auf Benutzerinformationen.',
       password_strength_error: 'Das Passwort ist zu schwach.',
       user_exists: 'Der Nutzer existiert bereits.',
@@ -90,7 +93,7 @@ export default {
   loginAtLabel: 'Anmelden bei %s',
   loginLabel: 'Anmelden',
   loginSubmitLabel: 'Anmelden',
-  loginWithLabel: 'Anmelden mit %s',
+  loginWithLabel: 'Mit %s anmelden',
   notYourAccountAction: 'Falsches Konto?',
   passwordInputPlaceholder: 'Ihr Passwort',
   passwordStrength: {
@@ -111,7 +114,7 @@ export default {
     'Geben Sie Ihre E-Mail-Adresse ein, um sich anzumelden<br/>oder ein Konto zu erstellen',
   passwordlessSMSAlternativeInstructions:
     'Andernfalls geben Sie Ihre Telefonnummer ein,<br>um sich anzumelden oder ein Konto zu erstellen',
-  passwordlessSMSCodeInstructions: 'Eine SMS mit dem Code wurde gesendet<br/>an %s.',
+  passwordlessSMSCodeInstructions: 'Eine SMS mit dem Code wurde gesendet an %s.',
   passwordlessSMSInstructions:
     'Geben Sie Ihre Telefonnummer ein,<br>um sich anzumelden oder ein Konto zu erstellen',
   phoneNumberInputPlaceholder: 'Ihre Telefonnummer',

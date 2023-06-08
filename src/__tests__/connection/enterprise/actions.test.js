@@ -1,10 +1,11 @@
 import I from 'immutable';
 import { logIn } from '../../../connection/enterprise/actions';
 import * as l from '../../../core/index';
-import { setField, getFieldValue } from '../../../field/index';
+import { setField } from '../../../field/index';
 
 jest.mock('connection/database/index', () => ({
-  databaseLogInWithEmail: jest.fn(() => true)
+  databaseLogInWithEmail: jest.fn(() => true),
+  databaseUsernameValue: jest.fn()
 }));
 
 jest.mock('store/index', () => ({
@@ -17,7 +18,8 @@ jest.mock('store/index', () => ({
 jest.mock('connection/enterprise', () => ({
   matchConnection: jest.fn(),
   enterpriseActiveFlowConnection: jest.fn(),
-  isHRDActive: jest.fn()
+  isHRDActive: jest.fn(),
+  isEnterpriseDomain: jest.fn()
 }));
 
 jest.mock('core/actions', () => ({
@@ -37,7 +39,7 @@ describe('Login with connection scopes', () => {
   });
 
   describe('for an SSO connection', () => {
-    it.only('passes connectionScopes to the connection', () => {
+    it('passes connectionScopes to the connection', () => {
       lock = l.setup('__lock__', 'client', 'domain', {
         auth: {
           connectionScopes: {
@@ -64,10 +66,33 @@ describe('Login with connection scopes', () => {
         login_hint: 'test@test.com'
       });
     });
+
+    it('should not throw an error if the captcha was not completed', () => {
+      lock = l.setup('__lock__', 'client', 'domain', {});
+      lock = setField(lock, 'email', 'test@test.com');
+
+      // This will be specified in the response from the /challenge endpoint if the
+      // dashboard settings have Captcha as 'required', regardless of connection being used.
+      lock = l.setCaptcha(lock, {
+        required: true,
+        provider: 'recaptcha_v2'
+      });
+
+      require('store/index').read.mockReturnValue(lock);
+
+      require('connection/enterprise').matchConnection.mockReturnValue(
+        I.fromJS({ name: 'sso-connection' })
+      );
+
+      const coreActions = require('core/actions');
+
+      logIn('__lock__');
+      expect(coreActions.logIn).toHaveBeenCalled();
+    });
   });
 
   describe('for a non-SSO connection', () => {
-    it.only('passes connectionScopes to the connection', () => {
+    it('passes connectionScopes to the connection', () => {
       lock = l.setup('__lock__', 'client', 'domain', {
         auth: {
           connectionScopes: {
@@ -89,13 +114,18 @@ describe('Login with connection scopes', () => {
 
       logIn('__lock__');
 
-      expect(coreActions.logIn).toHaveBeenCalledWith('__lock__', ['password', 'username'], {
-        connection_scope: ['offline_access'],
-        connection: 'enterprise-connection',
-        username: 'test',
-        password: 'test',
-        login_hint: 'test'
-      });
+      expect(coreActions.logIn).toHaveBeenCalledWith(
+        '__lock__',
+        ['password', 'username'],
+        {
+          connection_scope: ['offline_access'],
+          connection: 'enterprise-connection',
+          username: 'test',
+          password: 'test',
+          login_hint: 'test'
+        },
+        expect.any(Function)
+      );
     });
   });
 });

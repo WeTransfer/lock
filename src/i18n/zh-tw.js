@@ -35,12 +35,15 @@ export default {
     passwordless: {
       'bad.email': '電子信箱錯誤',
       'bad.phone_number': '手機號碼錯誤。',
-      'lock.fallback': '對不起，發生錯誤。'
+      'lock.fallback': '對不起，發生錯誤。',
+      invalid_captcha: '解決挑戰問題以驗證您不是機器人。',
+      invalid_recaptcha: '選中復選框以確認您不是機器人。'
     },
     signUp: {
       invalid_password: '密碼錯誤',
       'lock.fallback': '對不起，註冊時發生錯誤。',
       password_dictionary_error: '密碼過於常見。',
+      password_leaked: '在另一個網站的公共數據洩露中檢測到這種憑據組合。 在創建您的帳戶之前，請使用不同的密碼以確保其安全。',
       password_no_user_info_error: '密碼中出現帳號訊息。',
       password_strength_error: '密碼太簡單。',
       user_exists: '該使用者已存在。',
@@ -97,7 +100,7 @@ export default {
   passwordlessEmailCodeInstructions: '代碼已透過電子郵件送到 %s 。',
   passwordlessEmailInstructions: '輸入電子郵件信箱登入<br>或是建立帳號。',
   passwordlessSMSAlternativeInstructions: '您還可以使用手機號碼登入<br>或是建立帳號。',
-  passwordlessSMSCodeInstructions: '代碼已透過簡訊發送到<br> %s 。',
+  passwordlessSMSCodeInstructions: '代碼已透過簡訊發送到 %s 。',
   passwordlessSMSInstructions: '輸入手機號碼登入<br>或是建立帳號',
   phoneNumberInputPlaceholder: '您的手機號碼',
   resendCodeAction: '沒有收到代碼？',

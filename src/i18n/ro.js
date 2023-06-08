@@ -41,12 +41,15 @@ export default {
     passwordless: {
       'bad.email': 'Adresa de email este invalidă',
       'bad.phone_number': 'Numărul de telefon este invalid',
-      'lock.fallback': 'Ne pare rău, ceva nu a funcționat'
+      'lock.fallback': 'Ne pare rău, ceva nu a funcționat',
+      invalid_captcha: 'Rezolvați întrebarea pentru a verifica dacă nu sunteți un robot.',
+      invalid_recaptcha: 'Selectați caseta pentru a verifica dacă nu sunteți un robot.'
     },
     signUp: {
       invalid_password: 'Parolă invalidă.',
       'lock.fallback': 'Ne pare rău, a apărut o eroare în procesul de înregistrare.',
       password_dictionary_error: 'Parola este prea comună.',
+      password_leaked: 'Această combinație de acreditări a fost detectată într-o încălcare a datelor publice pe un alt site web. Înainte de a vă crea contul, vă rugăm să utilizați o altă parolă pentru a-l păstra în siguranță.',
       password_no_user_info_error: 'Parola este similară cu utilizatorul.',
       password_strength_error: 'Parola este prea ușoară.',
       user_exists: 'Utilizator existent.',
@@ -108,7 +111,7 @@ export default {
   passwordlessEmailInstructions: 'Introdu adresa de email pentru conectare<br/>sau creează un cont',
   passwordlessSMSAlternativeInstructions:
     ' Dacă nu, introdu un număr de telefon pentru conectare <br/>sau creează un cont',
-  passwordlessSMSCodeInstructions: 'Un SMS cu codul de acces a fost trimis la<br/>la %s.',
+  passwordlessSMSCodeInstructions: 'Un SMS cu codul de acces a fost trimis la la %s.',
   passwordlessSMSInstructions:
     'Introdu numărul de telefon pentru conectare<br/>sau creează un cont',
   phoneNumberInputPlaceholder: 'numărul tău de telefon',

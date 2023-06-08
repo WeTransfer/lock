@@ -40,13 +40,16 @@ export default {
     passwordless: {
       'bad.email': 'メールアドレスが不正です',
       'bad.phone_number': '電話番号が不正です',
-      'lock.fallback': '申し訳ございません。エラーが発生しました。'
+      'lock.fallback': '申し訳ございません。エラーが発生しました。',
+      invalid_captcha: 'チャレンジ質問を解いて、ロボットではないことを確認してください。',
+      invalid_recaptcha: 'チェックボックスを選択して、ロボットでないことを確認します。'
     },
     signUp: {
       invalid_password: 'パスワードが不正です。',
       'lock.fallback':
         '申し訳ございません。ユーザー登録時に何らかの理由によりエラーが発生しました。',
       password_dictionary_error: 'パスワードが単純すぎます。',
+      password_leaked: 'この資格情報の組み合わせは、別の Web サイトで公開されたデータ侵害で検出されました。 アカウントを作成する前に、別のパスワードを使用して安全に保管してください。',
       password_no_user_info_error: 'ユーザー情報を含むパスワードは避けてください。',
       password_strength_error: 'パスワードが脆弱です。',
       user_exists: 'すでに登録されているユーザーです。',

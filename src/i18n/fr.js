@@ -44,13 +44,16 @@ export default {
     passwordless: {
       'bad.email': 'L’adresse de messagerie n’est pas valide',
       'bad.phone_number': 'Le numéro de téléphone n’est pas valide',
-      'lock.fallback': 'Nous sommes désolés, un problème est survenu'
+      'lock.fallback': 'Nous sommes désolés, un problème est survenu',
+      invalid_captcha: "Résolvez la question du défi pour vérifier que vous n'êtes pas un robot.",
+      invalid_recaptcha: "Cochez la case pour vérifier que vous n'êtes pas un robot."
     },
     signUp: {
       invalid_password: 'Le mot de passe n’est pas valide.',
       'lock.fallback':
         'Nous sommes désolés, un problème est survenu lors de la tentative d’inscription.',
       password_dictionary_error: 'Le mot de passe est trop commun.',
+      password_leaked: "Cette combinaison d'informations d'identification a été détectée lors d'une violation de données publiques sur un autre site Web. Avant la création de votre compte, veuillez utiliser un mot de passe différent pour le garder en sécurité.",
       password_no_user_info_error: 'Le mot de passe est basé sur des informations utilisateur.',
       password_strength_error: 'La force du mot de passe est trop faible.',
       user_exists: 'Cet utilisateur existe déjà.',
@@ -115,7 +118,7 @@ export default {
     'Entrez votre adresse de messagerie pour vous connecter<br/>ou créez un compte',
   passwordlessSMSAlternativeInstructions:
     'Sinon saisissez votre numéro de téléphone pour vous connecter<br/>ou créez un compte',
-  passwordlessSMSCodeInstructions: 'Un SMS avec le code a été envoyé<br/>à %s.',
+  passwordlessSMSCodeInstructions: 'Un SMS avec le code a été envoyé à %s.',
   passwordlessSMSInstructions:
     'Saisissez votre numéro de téléphone pour vous connecter<br/>ou créez un compte',
   phoneNumberInputPlaceholder: 'votre numéro de téléphone',

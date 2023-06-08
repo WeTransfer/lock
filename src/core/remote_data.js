@@ -6,7 +6,7 @@ import * as l from './index';
 import { isADEnabled } from '../connection/enterprise'; // shouldn't depend on this
 import sync, { isSuccess } from '../sync';
 import webApi from './web_api';
-import { setCaptcha } from '../core/index';
+import { setCaptcha, setPasswordlessCaptcha } from '../core/index';
 
 export function syncRemoteData(m) {
   if (l.useTenantInfo(m)) {
@@ -24,7 +24,12 @@ export function syncRemoteData(m) {
   m = sync(m, 'sso', {
     conditionFn: m => l.auth.sso(m) && l.ui.rememberLastLogin(m),
     waitFn: m => isSuccess(m, 'client'),
-    syncFn: (m, cb) => fetchSSOData(l.id(m), isADEnabled(m), cb),
+    syncFn: (m, cb) => {
+      fetchSSOData(l.id(m), isADEnabled(m), (...args) => {
+        l.emitEvent(m, 'ssodata fetched', args);
+        cb(...args);
+      });
+    },
     successFn: (m, result) => m.mergeIn(['sso'], Immutable.fromJS(result)),
     errorFn: (m, error) => {
       if (error.error === 'consent_required') {
@@ -54,6 +59,16 @@ export function syncRemoteData(m) {
     },
     successFn: setCaptcha
   });
+
+  m = sync(m, 'passwordlessCaptcha', {
+    syncFn: (m, cb) => {
+      webApi.getPasswordlessChallenge(m.get('id'), (err, r) => {
+        cb(null, r);
+      });
+    },
+    successFn: setPasswordlessCaptcha
+  });
+
 
   return m;
 }

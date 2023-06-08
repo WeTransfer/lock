@@ -96,6 +96,27 @@ export const wasLoginAttemptedWith = params => {
   return Map(params).reduce((r, v, k) => r && paramsFromLastCall[k] === v, true);
 };
 
+export const wasLoginAttemptedWithAsync = (params, cb, timeout = 1000) => {
+  const startTime = Date.now();
+
+  const int = setInterval(() => {
+    const lastCall = webApi.logIn.getCall(0);
+
+    if (lastCall) {
+      const paramsFromLastCall = lastCall.args[1];
+
+      cb(Map(params).reduce((r, v, k) => r && paramsFromLastCall[k] === v, true));
+      clearInterval(int);
+      return;
+    }
+
+    if (Date.now() - startTime > timeout) {
+      clearInterval(int);
+      throw Error('Timeout waiting for login attempt');
+    }
+  }, 10);
+};
+
 export const wasSignUpAttemptedWith = params => {
   const lastCall = webApi.signUp.lastCall;
   if (!lastCall) return false;
@@ -145,7 +166,7 @@ export const displayLock = (name, opts = {}, done = () => {}, show_ops = {}) => 
 export const q = (lock, query, all = false) => {
   query = `#auth0-lock-container-${lock.id} ${query}`;
   const method = all ? 'querySelectorAll' : 'querySelector';
-  return global.document[method](query);
+  return window.document[method](query);
 };
 
 const qView = (lock, query, all = false) => {
@@ -205,6 +226,9 @@ const hasFlashMessage = (query, lock, message) => {
 };
 export const hasErrorMessage = (lock, message) => {
   return hasFlashMessage('.auth0-global-message-error', lock, message);
+};
+export const hasErrorMessageElement = lock => {
+  return q(lock, '.auth0-global-message-error');
 };
 export const hasSuccessMessage = (lock, message) => {
   return hasFlashMessage('.auth0-global-message-success', lock, message);
@@ -312,23 +336,76 @@ export const waitUntilExists = (lock, selector, cb, timeout = 1000) => {
 export const waitUntilInputExists = (lock, name, cb, timeout) =>
   waitUntilExists(lock, `.auth0-lock-input-${name} input`, cb, timeout);
 
+export const waitUntilCaptchaExists = (lock, cb, timeout) =>
+  waitUntilInputExists(lock, 'captcha', cb, timeout);
+
 export const waitUntilErrorExists = (lock, cb, timeout) =>
   waitUntilExists(lock, '.auth0-global-message-error span', cb, timeout);
 
+export const waitUntilSuccessFlashExists = (lock, cb, timeout) =>
+  waitUntilExists(lock, '.auth0-global-message-success', cb, timeout);
+
+export const waitUntilInfoFlashExists = (lock, cb, timeout) =>
+  waitUntilExists(lock, '.auth0-global-message-info', cb, timeout);
+
+export const waitForSSONotice = (lock, cb, timeout) =>
+  waitUntilExists(lock, '.auth0-sso-notice-container', cb, timeout);
+
+export const waitForQuickAuthButton = (lock, icon, cb, timeout) =>
+  waitUntilExists(lock, `.auth0-lock-social-button[data-provider^="${icon}"]`, cb, timeout);
 // login
 
-export const logInWithEmailAndPassword = lock => {
+export const waitForEmailAndPasswordInput = (lock, cb, timeout) => {
+  waitUntilInputExists(
+    lock,
+    'email',
+    () => {
+      waitUntilInputExists(lock, 'password', cb, timeout);
+    },
+    timeout
+  );
+};
+
+export const waitForUsernameAndPasswordInput = (lock, cb, timeout) => {
+  waitUntilInputExists(
+    lock,
+    'username',
+    () => {
+      waitUntilInputExists(lock, 'password', cb, timeout);
+    },
+    timeout
+  );
+};
+
+/**
+ * Builds a function that waits for waitFn to complete (usually something that looks for elements to appear on screen) before executing fn. Used as a building block to contruct higher-order waiting functions.
+ * @param {*} fn The function to execute when waitFn has completed
+ * @param {*} waitFn The 'waiting' function that blocks fn, usually something that waits for elements to appear
+ * @returns A function that can be given a lock instance and a callback for when the function has completed
+ */
+const loginWaitFn = (fn, waitFn) => (lock, cb) => {
+  if (cb) {
+    waitFn(lock, () => {
+      fn(lock);
+      cb();
+    });
+  } else {
+    fn(lock);
+  }
+};
+
+export const logInWithEmailAndPassword = loginWaitFn(lock => {
   fillEmailInput(lock, 'someone@example.com');
   fillPasswordInput(lock, 'mypass');
   submit(lock);
-};
+}, waitForEmailAndPasswordInput);
 
-export const logInWithEmailPasswordAndCaptcha = lock => {
+export const logInWithEmailPasswordAndCaptcha = loginWaitFn(lock => {
   fillEmailInput(lock, 'someone@example.com');
   fillPasswordInput(lock, 'mypass');
   fillCaptchaInput(lock, 'captchaValue');
   submit(lock);
-};
+}, waitForEmailAndPasswordInput);
 
 /**
  * The mocked connection has password policy "fair". So I need an strong password
@@ -343,24 +420,31 @@ function generateComplexPassword() {
   return result;
 }
 
-export const signUpWithEmailAndPassword = lock => {
+export const signUpWithEmailAndPassword = loginWaitFn(lock => {
   fillEmailInput(lock, 'someone@example.com');
   fillPasswordInput(lock, generateComplexPassword());
   submit(lock);
-};
+}, waitForEmailAndPasswordInput);
 
-export const signUpWithEmailPasswordAndCaptcha = lock => {
+export const signUpWithEmailPasswordAndCaptcha = loginWaitFn(lock => {
   fillEmailInput(lock, 'someone@example.com');
   fillPasswordInput(lock, generateComplexPassword());
   fillCaptchaInput(lock, 'captchaValue');
   submit(lock);
-};
+}, waitForEmailAndPasswordInput);
 
-export const logInWithUsernameAndPassword = lock => {
+export const logInWithUsernameAndPassword = loginWaitFn(lock => {
   fillUsernameInput(lock, 'someone');
   fillPasswordInput(lock, 'mypass');
   submit(lock);
-};
+}, waitForUsernameAndPasswordInput);
+
+export const logInWithUsernamePasswordAndCaptcha = loginWaitFn(lock => {
+  fillUsernameInput(lock, 'someone');
+  fillPasswordInput(lock, 'mypass');
+  fillCaptchaInput(lock, 'captchaValue');
+  submit(lock);
+}, waitForUsernameAndPasswordInput);
 
 // Helps to keep the context of what happened on a test that
 // was executed as part of an async flow, the normal use

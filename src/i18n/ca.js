@@ -42,12 +42,15 @@ export default {
     passwordless: {
       'bad.email': "L'adreça de correu no és vàlida",
       'bad.phone_number': 'El número de telèfon no és vàlid',
-      'lock.fallback': 'Quelcom ha fet fallida'
+      'lock.fallback': 'Quelcom ha fet fallida',
+      invalid_captcha: 'Resoleu la pregunta de desafiament per verificar que no sou un robot.',
+      invalid_recaptcha: 'Seleccioneu la casella de verificació per verificar que no sou un robot.'
     },
     signUp: {
       invalid_password: 'La contrasenya no és vàlida.',
       'lock.fallback': 'Hi ha hagut un error durant el registre.',
       password_dictionary_error: 'La contrasenya és massa comú.',
+      password_leaked: 'Aquesta combinació de credencials es va detectar en una violació de dades públiques en un altre lloc web. Abans de crear el vostre compte, utilitzeu una contrasenya diferent per mantenir-lo segur.',
       password_no_user_info_error: "La contrasenya es basa en les dades de l'usuari.",
       password_strength_error: 'La contrasenya és massa feble.',
       user_exists: 'Ja existeix aquest usuari.',
@@ -109,7 +112,7 @@ export default {
   passwordlessEmailInstructions: 'Indiqueu el vostre email per iniciar sessió<br/>o registrar-vos',
   passwordlessSMSAlternativeInstructions:
     'Altrament, introduïu el vostre telèfon per iniciar sessió<br/>o registrar-vos',
-  passwordlessSMSCodeInstructions: 'Se us ha enviat un SMS amb el codi<br/>a %s.',
+  passwordlessSMSCodeInstructions: 'Se us ha enviat un SMS amb el codi a %s.',
   passwordlessSMSInstructions: 'Indiqueu el vostre telèfon per iniciar sessió<br/>o registrar-vos',
   phoneNumberInputPlaceholder: 'número de telèfon',
   resendCodeAction: 'No heu rebut el codi?',

@@ -35,12 +35,15 @@ export default {
     passwordless: {
       'bad.email': '邮箱错误',
       'bad.phone_number': '手机号码格式不正确。',
-      'lock.fallback': '对不起，出现错误。'
+      'lock.fallback': '对不起，出现错误。',
+      invalid_captcha: '解决挑战问题以验证您不是机器人。',
+      invalid_recaptcha: '选中复选框以确认您不是机器人。'
     },
     signUp: {
       invalid_password: '密码错误',
       'lock.fallback': '对不起，请求注册时出现错误。',
       password_dictionary_error: '密码过于常见。',
+      password_leaked: '在另一个网站的公共数据泄露中检测到这种凭据组合。 在创建您的帐户之前，请使用不同的密码以确保其安全。',
       password_no_user_info_error: '密码中出现账号信息。',
       password_strength_error: '密码过于简单。',
       user_exists: '该账号已存在。',
@@ -97,7 +100,7 @@ export default {
   passwordlessEmailCodeInstructions: '代码已通过邮件发送到 %s。',
   passwordlessEmailInstructions: '输入邮箱登录<br/>或者创建账号。',
   passwordlessSMSAlternativeInstructions: '您还可以通过手机号码登录<br/>或者创建账号。',
-  passwordlessSMSCodeInstructions: '代码已通过短信发送到<br/> %s。',
+  passwordlessSMSCodeInstructions: '代码已通过短信发送到 %s。',
   passwordlessSMSInstructions: '输入手机号码登录<br/>或者创建账号',
   phoneNumberInputPlaceholder: '您的手机号码',
   resendCodeAction: '没有收到号码?',

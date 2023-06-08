@@ -50,15 +50,18 @@ class EscKeyDownHandler {
         f();
       }
     };
-    global.document.addEventListener('keydown', this.handler, false);
+    window.document.addEventListener('keydown', this.handler, false);
   }
 
   release() {
-    global.document.removeEventListener('keydown', this.handler);
+    window.document.removeEventListener('keydown', this.handler);
   }
 }
 
-const IPHONE = global.navigator && !!global.navigator.userAgent.match(/iPhone/i);
+const IPHONE =
+  typeof window !== 'undefined' &&
+  window.navigator &&
+  !!window.navigator.userAgent.match(/iPhone/i);
 
 export default class Container extends React.Component {
   constructor(props) {
@@ -99,6 +102,11 @@ export default class Container extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    // Safari does not disable form submits when the submit button is disabled
+    // on single input (eg. passwordless) forms, so disable it manually.
+    if (this.props.isSubmitting) {
+      return;
+    }
 
     this.checkConnectionResolver(() => {
       const { submitHandler } = this.props;
@@ -284,7 +292,10 @@ Container.propTypes = {
 
 // NOTE: detecting the file protocol is important for things like electron.
 const isFileProtocol =
-  global.window && global.window.location && global.window.location.protocol === 'file:';
+  typeof window !== 'undefined' &&
+  window.window &&
+  window.location &&
+  window.location.protocol === 'file:';
 
 export const defaultProps = (Container.defaultProps = {
   autofocus: false,

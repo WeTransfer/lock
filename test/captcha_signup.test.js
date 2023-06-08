@@ -26,135 +26,155 @@ const recaptchav2Response = {
   siteKey: 'my_site_key'
 };
 
-describe('captcha on signup', function() {
+describe('captcha on signup', function () {
   before(h.stubWebApis);
   after(h.restoreWebApis);
 
   describe('svg-captcha', () => {
-    describe('when the api returns a new challenge', function() {
-      beforeEach(function(done) {
+    describe('when the api returns a new challenge', function () {
+      beforeEach(function (done) {
         this.stub = h.stubGetChallenge([svgCaptchaRequiredResponse1, svgCaptchaRequiredResponse2]);
         this.lock = h.displayLock('', lockOpts, done);
       });
 
-      afterEach(function() {
+      afterEach(function () {
         this.lock.hide();
       });
 
-      it('sign-up tab should be active', function() {
-        expect(h.isSignUpTabCurrent(this.lock)).to.be.ok();
+      it('sign-up tab should be active', function (done) {
+        h.waitUntilExists(this.lock, '.auth0-lock-tabs-current', () => {
+          expect(h.isSignUpTabCurrent(this.lock)).to.be.ok();
+          done();
+        });
       });
 
-      it('should show the captcha input', function(done) {
+      it('should show the captcha input', function (done) {
         setTimeout(() => {
           expect(h.qInput(this.lock, 'captcha', false)).to.be.ok();
           done();
         }, 500);
       });
 
-      it('should require another challenge when clicking the refresh button', function(done) {
-        h.clickRefreshCaptchaButton(this.lock);
-        setTimeout(() => {
-          expect(h.q(this.lock, '.auth0-lock-captcha-image').style.backgroundImage).to.equal(
-            `url("${svgCaptchaRequiredResponse2.image}")`
-          );
+      it('should require another challenge when clicking the refresh button', function (done) {
+        h.waitUntilExists(this.lock, '.auth0-lock-captcha-refresh', () => {
+          h.clickRefreshCaptchaButton(this.lock);
+
+          setTimeout(() => {
+            expect(h.q(this.lock, '.auth0-lock-captcha-image').style.backgroundImage).to.equal(
+              `url("${svgCaptchaRequiredResponse2.image}")`
+            );
+            done();
+          }, 200);
+        });
+      });
+
+      it('should submit the captcha provided by the user', function (done) {
+        h.signUpWithEmailPasswordAndCaptcha(this.lock, () => {
+          expect(h.wasSignUpAttemptedWith({ captcha: 'captchaValue' })).to.be.ok();
           done();
-        }, 200);
+        });
       });
 
-      it('should submit the captcha provided by the user', function() {
-        h.signUpWithEmailPasswordAndCaptcha(this.lock);
-        expect(h.wasSignUpAttemptedWith({ captcha: 'captchaValue' })).to.be.ok();
-      });
-
-      it('should not submit the form if the captcha is not provided', function() {
-        h.signUpWithEmailAndPassword(this.lock);
-        expect(h.wasSignUpAttemptedWith({})).to.not.be.ok();
-        expect(h.hasErrorMessage(this.lock, en.error.login.invalid_captcha)).to.be.ok();
+      it('should not submit the form if the captcha is not provided', function (done) {
+        h.signUpWithEmailAndPassword(this.lock, () => {
+          h.waitUntilErrorExists(this.lock, () => {
+            expect(h.wasSignUpAttemptedWith({})).to.not.be.ok();
+            expect(h.hasErrorMessage(this.lock, en.error.login.invalid_captcha)).to.be.ok();
+            done();
+          });
+        });
       });
     });
 
-    describe('when the challenge api returns required: false', function() {
-      beforeEach(function(done) {
+    describe('when the challenge api returns required: false', function () {
+      beforeEach(function (done) {
         h.stubGetChallenge({
           required: false
         });
         this.lock = h.displayLock('', lockOpts, done);
       });
 
-      afterEach(function() {
+      afterEach(function () {
         this.lock.hide();
       });
 
-      it('should not show the captcha input', function() {
+      it('should not show the captcha input', function () {
         expect(h.qInput(this.lock, 'captcha', false)).to.not.be.ok();
       });
 
-      describe('when the form submission fails and the transaction starts requiring a challenge', function() {
-        beforeEach(function(done) {
+      describe('when the form submission fails and the transaction starts requiring a challenge', function () {
+        it('should call the challenge api again and show the input', function (done) {
           h.assertSignUp((lockID, options, cb) => {
             cb(new Error('bad request'));
             setTimeout(done, 300);
           });
-          h.stubGetChallenge(svgCaptchaRequiredResponse1);
-          h.fillEmailInput(this.lock, 'someone@example.com');
-          h.fillComplexPassword(this.lock);
-          h.submitForm(this.lock);
-        });
 
-        it('should call the challenge api again and show the input', function() {
-          expect(h.qInput(this.lock, 'captcha', false)).to.be.ok();
+          h.waitForEmailAndPasswordInput(this.lock, () => {
+            h.stubGetChallenge(svgCaptchaRequiredResponse1);
+            h.fillEmailInput(this.lock, 'someone@example.com');
+            h.fillComplexPassword(this.lock);
+            h.submitForm(this.lock);
+
+            h.waitUntilInputExists(this.lock, 'captcha', () => {
+              expect(h.qInput(this.lock, 'captcha', false)).to.be.ok();
+            });
+          });
         });
       });
     });
   });
 
-  describe('recaptchav2', () => {
-    describe('when the api returns a new challenge', function() {
-      beforeEach(function(done) {
+  describe('recaptcha', () => {
+    describe('when the api returns a new challenge', function () {
+      beforeEach(function (done) {
         this.stub = h.stubGetChallenge([recaptchav2Response]);
         this.lock = h.displayLock('', lockOpts, done);
       });
 
-      afterEach(function() {
+      afterEach(function () {
         this.lock.hide();
       });
 
-      it('should load the captcha script', function() {
-        expect(h.q(this.lock, '.auth0-lock-recaptchav2')).to.be.ok();
+      it('should load the captcha script and input', function (done) {
+        h.waitUntilExists(this.lock, '.auth0-lock-recaptchav2', () => {
+          expect(h.q(this.lock, '.auth0-lock-recaptchav2')).to.be.ok();
+          done();
+        });
       });
 
-      it('should show the captcha input', function() {
-        expect(h.q(this.lock, '.auth0-lock-recaptchav2')).to.be.ok();
-      });
-
-      it('should not submit the form if the captcha is not provided', function() {
-        h.signUpWithEmailAndPassword(this.lock);
-        expect(h.wasSignUpAttemptedWith({})).to.not.be.ok();
-        expect(h.hasErrorMessage(this.lock, en.error.login.invalid_recaptcha)).to.be.ok();
+      it('should not submit the form if the captcha is not provided', function (done) {
+        h.waitForEmailAndPasswordInput(this.lock, () => {
+          h.signUpWithEmailAndPassword(this.lock, () => {
+            h.waitUntilErrorExists(this.lock, () => {
+              expect(h.wasSignUpAttemptedWith({})).not.to.be.ok();
+              expect(h.hasErrorMessage(this.lock, en.error.login.invalid_recaptcha)).to.be.ok();
+              done();
+            });
+          });
+        });
       });
     });
 
-    describe('when the challenge api returns required: false', function() {
+    describe('when the challenge api returns required: false', function () {
       let notRequiredStub;
-      beforeEach(function(done) {
+      beforeEach(function (done) {
         notRequiredStub = h.stubGetChallenge({
           required: false
         });
         this.lock = h.displayLock('', lockOpts, done);
       });
 
-      afterEach(function() {
+      afterEach(function () {
         this.lock.hide();
       });
 
-      it('should not show the captcha input', function() {
+      it('should not show the captcha input', function () {
         expect(h.q(this.lock, '.auth0-lock-recaptchav2')).to.not.be.ok();
       });
 
-      describe('when the form submission fails and the transaction starts requiring a challenge', function() {
+      describe('when the form submission fails and the transaction starts requiring a challenge', function () {
         let challengeStub;
-        beforeEach(function(done) {
+        beforeEach(function (done) {
           h.assertSignUp((lockID, options, cb) => {
             cb(new Error('bad request'));
             // We wait 250ms to display errors
@@ -167,7 +187,7 @@ describe('captcha on signup', function() {
           h.submitForm(this.lock);
         });
 
-        it('should call the challenge api again and show the input', function() {
+        it('should call the challenge api again and show the input', function () {
           expect(notRequiredStub.calledOnce).to.be.true;
           expect(challengeStub.calledOnce).to.be.true;
           expect(h.q(this.lock, '.auth0-lock-recaptchav2')).to.be.ok();

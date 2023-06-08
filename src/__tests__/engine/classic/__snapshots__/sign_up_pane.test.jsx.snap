@@ -1,11 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`SignUpPane hides the Captcha pane for SSO connections 1`] = `
+<div>
+  <Unknown
+    i18n={
+      {
+        "html": [Function],
+        "str": [Function],
+      }
+    }
+    lock="model"
+    placeholder="emailInputPlaceholder"
+    strictValidation={true}
+  />
+</div>
+`;
+
 exports[`SignUpPane onlyEmail is false hide UsernamePane when databaseConnectionRequiresUsername is true and signUpHideUsernameField is true 1`] = `
 <div>
   <div
     data-__type="email_pane"
     data-i18n={
-      Object {
+      {
         "html": [Function],
         "str": [Function],
       }
@@ -22,7 +38,7 @@ exports[`SignUpPane onlyEmail is false shows PasswordPane 1`] = `
   <div
     data-__type="email_pane"
     data-i18n={
-      Object {
+      {
         "html": [Function],
         "str": [Function],
       }
@@ -34,7 +50,7 @@ exports[`SignUpPane onlyEmail is false shows PasswordPane 1`] = `
   <div
     data-__type="password_pane"
     data-i18n={
-      Object {
+      {
         "html": [Function],
         "str": [Function],
       }
@@ -52,7 +68,7 @@ exports[`SignUpPane onlyEmail is false shows UsernamePane when databaseConnectio
   <div
     data-__type="email_pane"
     data-i18n={
-      Object {
+      {
         "html": [Function],
         "str": [Function],
       }
@@ -64,7 +80,7 @@ exports[`SignUpPane onlyEmail is false shows UsernamePane when databaseConnectio
   <div
     data-__type="username_pane"
     data-i18n={
-      Object {
+      {
         "html": [Function],
         "str": [Function],
       }
@@ -77,7 +93,7 @@ exports[`SignUpPane onlyEmail is false shows UsernamePane when databaseConnectio
   <div
     data-__type="password_pane"
     data-i18n={
-      Object {
+      {
         "html": [Function],
         "str": [Function],
       }
@@ -95,7 +111,7 @@ exports[`SignUpPane onlyEmail is false shows custom fields when additionalSignUp
   <div
     data-__type="email_pane"
     data-i18n={
-      Object {
+      {
         "html": [Function],
         "str": [Function],
       }
@@ -107,7 +123,7 @@ exports[`SignUpPane onlyEmail is false shows custom fields when additionalSignUp
   <div
     data-__type="password_pane"
     data-i18n={
-      Object {
+      {
         "html": [Function],
         "str": [Function],
       }
@@ -151,7 +167,7 @@ exports[`SignUpPane renders only email by default 1`] = `
   <div
     data-__type="email_pane"
     data-i18n={
-      Object {
+      {
         "html": [Function],
         "str": [Function],
       }
@@ -171,7 +187,7 @@ exports[`SignUpPane shows header when instructions are available 1`] = `
   <div
     data-__type="email_pane"
     data-i18n={
-      Object {
+      {
         "html": [Function],
         "str": [Function],
       }
@@ -179,6 +195,60 @@ exports[`SignUpPane shows header when instructions are available 1`] = `
     data-lock="model"
     data-placeholder="emailInputPlaceholder"
     data-strictValidation={true}
+  />
+</div>
+`;
+
+exports[`SignUpPane shows the Captcha pane 1`] = `
+<div>
+  <Unknown
+    i18n={
+      {
+        "html": [Function],
+        "str": [Function],
+      }
+    }
+    lock="model"
+    placeholder="emailInputPlaceholder"
+    strictValidation={true}
+  />
+  <CaptchaPane
+    error={false}
+    i18n={
+      {
+        "html": [Function],
+        "str": [Function],
+      }
+    }
+    lock="model"
+    onReload={[Function]}
+  />
+</div>
+`;
+
+exports[`SignUpPane shows the Captcha pane for SSO (ADFS) connections 1`] = `
+<div>
+  <Unknown
+    i18n={
+      {
+        "html": [Function],
+        "str": [Function],
+      }
+    }
+    lock="model"
+    placeholder="emailInputPlaceholder"
+    strictValidation={true}
+  />
+  <CaptchaPane
+    error={false}
+    i18n={
+      {
+        "html": [Function],
+        "str": [Function],
+      }
+    }
+    lock="model"
+    onReload={[Function]}
   />
 </div>
 `;
